@@ -1,6 +1,6 @@
 # Python projects
 
-Collection of Python projects made as recruitement tasks or as learning projects.
+Collection of small Python projects made as recruitement tasks or as learning projects.
 
 ## Projects
 
