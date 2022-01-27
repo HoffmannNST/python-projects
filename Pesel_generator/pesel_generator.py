@@ -24,7 +24,8 @@ MOCK_DATA_ERRORS = [
 
 
 def generate_ssns(faker_records):
-    """Function for generating PESEL codes.
+    """Function for generating PESEL codes using faker package
+    with Provider class for pl_PL localization and ssn method.
 
     Args:
         records (int): number of records that needs to be created.
@@ -232,14 +233,14 @@ def validate_ssn(pesel_code, gender, birthday):
 
 if __name__ == "__main__":
     for records in [1000, 10000, 100000]:
-        print("Generation of {} PESEL codes:".format(records))
+        print("Generation of {} PESEL codes took:".format(records))
         start_time = time()
         series_faker = generate_ssns(records)
-        print("\t{:.4f} for generate_ssns".format(time() - start_time))
+        print("\t{:.4f} seconds for generate_ssns".format(time() - start_time))
 
         start_time = time()
         series_unique = generate_unique_ssns(records, "m", "1990-01-01", "1990-01-19")
-        print("\t{:.4f} for generate_unique_ssns".format(time() - start_time))
+        print("\t{:.4f} seconds for generate_unique_ssns".format(time() - start_time))
 
     print()
 

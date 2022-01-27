@@ -7,7 +7,7 @@ conn = sqlite3.connect(":memory:")
 c = conn.cursor()
 
 
-# Create table (2.1)
+# Create table
 c.execute(
     """CREATE TABLE FlightLeg (
     id INTEGER PRIMARY KEY,
@@ -23,7 +23,7 @@ c.execute(
 conn.commit()
 
 
-# Import data from flightlegs.csv to program (2.2.1)
+# Import data from flightlegs.csv to program
 with open("flightlegs.csv", "r") as data_file:
     db = reader(data_file, delimiter=";")
     header = next(db)
@@ -41,7 +41,7 @@ with open("flightlegs.csv", "r") as data_file:
     ]
 
 
-# Import data from program to DataBase (2.2.2)
+# Import data from program to DataBase
 c.executemany(
     """INSERT INTO FlightLeg (
         tailNumber,
@@ -58,7 +58,7 @@ c.executemany(
 conn.commit()
 
 
-# Create column with flight duration (2.3.1)
+# Create column with flight duration
 c.executescript(
     """
     ALTER TABLE FlightLeg ADD COLUMN flightDuration date;
@@ -72,7 +72,7 @@ c.executescript(
 conn.commit()
 
 
-# Create column with flight type (2.3.2)
+# Create column with flight type
 c.executescript(
     """
     ALTER TABLE FlightLeg ADD COLUMN flightType VARCHAR(1);
@@ -95,7 +95,7 @@ c.executescript(
 conn.commit()
 
 
-# Get plane with the most flights (2.4.1)
+# Get plane with the most flights
 c.execute(
     """
     SELECT
@@ -108,10 +108,10 @@ c.execute(
         COUNT(*) DESC
     """
 )
-print("\nSamolot który wykonał najwięcej lotów: {}".format(c.fetchone()[0]))
+print("\nPlane with the most flights: {}".format(c.fetchone()[0]))
 
 
-# Get plane with the most time flying (2.4.2)
+# Get plane with the most time flying
 c.execute(
     """
     SELECT
@@ -124,10 +124,10 @@ c.execute(
         SUM(flightDuration) DESC
     """
 )
-print("\nSamolot który przeleciał łącznie najwięcej minut: {}".format(c.fetchone()[0]))
+print("\nPlane with the most time flying: {}".format(c.fetchone()[0]))
 
 
-# Get shortest and longest of domestic and international flights (2.4.3)
+# Get shortest and longest of domestic and international flights
 SQL_COMMANDS = [("D", "ASC"), ("D", "DESC"), ("I", "ASC"), ("I", "DESC")]
 longest_shortest_flights = []
 
@@ -150,12 +150,12 @@ for command in SQL_COMMANDS:
 
 print(
     """
-Loty krajowe:
-    Najkrótszy: {}, {} - trwał {} min
-    Najdłuższy: {}, {} - trwał {} min\n
-Loty międzynarodowe:
-    Najkrótszy: {}, {} - trwał {} min
-    Najdłuższy: {}, {} - trwał {} min
+Domestic flights:
+    Shortest: {}, {} - lasted {} min
+    Longest: {}, {} - lasted {} min\n
+International flights:
+    Shortest: {}, {} - lasted {} min
+    Longest: {}, {} - lasted {} min
     """.format(
         *longest_shortest_flights[0],
         *longest_shortest_flights[1],
@@ -165,7 +165,7 @@ Loty międzynarodowe:
 )
 
 
-# Get wrong records and shortest time between flights (2.4.4, 2.4.5)
+# Get wrong records and shortest time between flights
 c.execute(
     """
     SELECT
@@ -207,13 +207,13 @@ for i, _ in enumerate(shortest_break_data):
                         shortest_break_data[i][3],
                     )
 
-print("Lista par błędnych rekordów lotów:")
+print("List of pairs of overlaping flights of the same plane:")
 for i in error_list:
     print("\t{}, {} - {}, {}".format(i[0], i[1], i[2], i[3]))
 
-print("\nNajkrótsza przerwa miała miejsce między lotem:")
+print("\nThe shortest break between two consecutive flights took place between flight:")
 print(
-    "\t{}, {}, a lotem: {}, {} i trwała {} min".format(
+    "\t{}, {}, and flight: {}, {}. The break lasted {} min".format(
         *break_time_shortest_info, int(round(break_time_shortest * 1440, 0))
     )
 )
