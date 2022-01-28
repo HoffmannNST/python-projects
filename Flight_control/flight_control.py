@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import sqlite3
 from csv import reader
 
@@ -108,7 +111,7 @@ c.execute(
         COUNT(*) DESC
     """
 )
-print("\nPlane with the most flights: {}".format(c.fetchone()[0]))
+print(f"\nPlane with the most flights: {c.fetchone()[0]}")
 
 
 # Get plane with the most time flying
@@ -124,7 +127,7 @@ c.execute(
         SUM(flightDuration) DESC
     """
 )
-print("\nPlane with the most time flying: {}".format(c.fetchone()[0]))
+print(f"\nPlane with the most time flying: {c.fetchone()[0]}")
 
 
 # Get shortest and longest of domestic and international flights
@@ -160,7 +163,7 @@ International flights:
         *longest_shortest_flights[0],
         *longest_shortest_flights[1],
         *longest_shortest_flights[2],
-        *longest_shortest_flights[3]
+        *longest_shortest_flights[3],
     )
 )
 
@@ -209,7 +212,7 @@ for i, _ in enumerate(shortest_break_data):
 
 print("List of pairs of overlaping flights of the same plane:")
 for i in error_list:
-    print("\t{}, {} - {}, {}".format(i[0], i[1], i[2], i[3]))
+    print(f"\t{i[0]}, {i[1]} - {i[2]}, {i[3]}")
 
 print("\nThe shortest break between two consecutive flights took place between flight:")
 print(

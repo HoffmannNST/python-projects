@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from random import shuffle
 from time import time
 from datetime import date, timedelta
@@ -154,11 +157,9 @@ def generate_unique_ssns(unique_records, gender, date_from, date_to):
             for index in range(unique_records):
                 picked_pesel_codes.append(pesel_codes_list[index])
         else:
-            print("\tATTENTION! The parameters of the function were to strict!")
+            print("\tATTENTION! The parameters of the function is to strict!")
             print(
-                "\tMaximum number of unique PESEL codes were generated, which is: {}".format(
-                    len(pesel_codes_list)
-                )
+                f"\tMaximum number of unique PESEL codes were generated, which is: {len(pesel_codes_list)}"
             )
             for index in range(len(pesel_codes_list)):
                 picked_pesel_codes.append(pesel_codes_list[index])
@@ -233,14 +234,14 @@ def validate_ssn(pesel_code, gender, birthday):
 
 if __name__ == "__main__":
     for records in [1000, 10000, 100000]:
-        print("Generation of {} PESEL codes took:".format(records))
+        print(f"Generation of {records} PESEL codes took:")
         start_time = time()
         series_faker = generate_ssns(records)
-        print("\t{:.4f} seconds for generate_ssns".format(time() - start_time))
+        print(f"\t{time() - start_time :.4f} seconds for generate_ssns")
 
         start_time = time()
         series_unique = generate_unique_ssns(records, "m", "1990-01-01", "1990-01-19")
-        print("\t{:.4f} seconds for generate_unique_ssns".format(time() - start_time))
+        print(f"\t{time() - start_time :.4f} seconds for generate_unique_ssns")
 
     print()
 
